@@ -1,0 +1,73 @@
+```
+var html = `<!DOCTYPE html>
+<html>
+<head>
+<title>123</title>
+</head>
+<body>
+<script>alert(1);</script>
+</body>
+</html>
+`
+var iframe = document.createElement('iframe');
+iframe.src = 'data:text/html;charset=utf-8,' + encodeURI(html);
+document.body.appendChild(iframe);
+```
+
+//appendChild的方法
+appendChild
+```
+function  loadScript（url, callback） {
+    let script = document.createElement('script');
+    if (script.readyState) { // IE
+        script.onreadystatechange = function () {
+            if (script.readyState === 'loaded' || script.readyState === 'complete') {
+                script.onreadystatechange = null;
+                callback();
+            }
+        } 
+    } else { // 其他浏览器
+        script.onload = function () {
+            callback();
+        }
+    }
+    script.src = url;
+    document.getElementsTagName('head')[0].appendChild('script');
+}
+————————————————
+版权声明：本文为CSDN博主「尼古拉斯-托尔斯泰-赵四」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_31411389/article/details/80502015
+```
+
+
+```
+let head = document.head || document.getElementsByTagName('head')[0];
+ 	let script = document.createElement('script');
+ 	script.type = "text/javascript";
+ 	script.charset = "utf-8"
+ 	script.src = src;
+
+ 	//script.load 
+ 	if(callback){
+ 		if (script.readyState) { // IE
+	        script.onreadystatechange = function () {
+	            if (script.readyState === 'loaded' || script.readyState === 'complete') {
+	                script.onreadystatechange = null;
+	                callback();
+	            }
+	        } 
+	    } else { // 其他浏览器
+	        script.onload = function () {
+	            callback();
+	        }
+          //https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequestEventTarget/onerror
+          //onerror,
+           script.onload = function () {
+	            callback();
+	        }
+	    }
+ 	}
+ 	
+ 	//append.script
+ 	head.appendChild(script);
+```
